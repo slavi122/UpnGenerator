@@ -6,8 +6,9 @@ class UpnGeneratorBih {
 
 
 	public $payer_address = '';
-
-	public $subject = '';
+    public $payer = '';
+    public $subject = '';
+    public $receiver = '';
 
 	public $code = 'OTHR';
 
@@ -23,25 +24,27 @@ class UpnGeneratorBih {
 
 	public function generate($output = false) {
 		$im = \ImageCreateFromJpeg(__DIR__ . '/upn-blank.jpg');
-        $black = imagecolorallocate($im, 0x00, 0x00, 0x00);
-        $font = __DIR__ . '/courier.ttf';
+        $black = imagecolorallocate($im, 0, 6, 195);
+        $font = __DIR__ . '/arial.ttf';
         $angle = 0;
 
-        imagefttext($im, 9, $angle, 17, 97, $black, $font, $this->payer_address);
+        imagefttext($im, 9, $angle, 10, 42, $black, $font, $this->payer);
+        imagefttext($im, 9, $angle, 10, 54, $black, $font, $this->payer_address);
         imagefttext($im, 12, $angle, 20, 144, $black, $font, $this->code);
-        imagefttext($im, 12, $angle, 90, 144, $black, $font, $this->subject);
-
+        imagefttext($im, 8, $angle, 120, 114, $black, $font, $this->subject);
+  
         $dimensions = imagettfbbox(12, $angle, $font, $this->amount);
         $textWidth = abs($dimensions[4] - $dimensions[0]);
         $x = 212 - $textWidth;
-        imagefttext($im, 12, $angle, 350, 80, $black, $font, $this->amount);
+        imagefttext($im, 12, $angle, 370, 110, $black, $font, $this->amount);
 
-        imagefttext($im, 12, $angle, 238, 177, $black, $font, $this->payment_date);
+        $this->imagettftextSp($im, 12, $angle, 203, 172, $black, $font, $this->payment_date, 4.2);
         imagefttext($im, 12, $angle, 368, 177, $black, $font, $this->receiver_bic);
-        $this->imagettftextSp($im, 12, $angle, 335, 75, $black, $font, $this->receiver_iban, 9);
+        $this->imagettftextSp($im, 12, $angle, 335, 75, $black, $font, $this->receiver_iban, 8);
         imagefttext($im, 12, $angle, 17, 244, $black, $font, $this->reference_prefix);
-        imagefttext($im, 12, $angle, 85, 244, $black, $font, $this->reference);
-        imagefttext($im, 9, $angle, 17, 276, $black, $font, $this->receiver_address);
+        imagefttext($im, 10, $angle, 10, 78, $black, $font, $this->reference);
+        imagefttext($im, 8, $angle, 10, 125, $black, $font, $this->receiver);
+        imagefttext($im, 8, $angle, 10, 137, $black, $font, $this->receiver_address);
 
         if (!$output) { // return string
             ob_start();
