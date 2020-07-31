@@ -1,8 +1,8 @@
 <?php
 
-namespace Media24si\UpnGenerator;
+namespace Slavi122\UpnGenerator;
 
-class UpnGenerator {
+class UpnGeneratorBih {
 
 
 	public $payer_address = '';
@@ -34,11 +34,11 @@ class UpnGenerator {
         $dimensions = imagettfbbox(12, $angle, $font, $this->amount);
         $textWidth = abs($dimensions[4] - $dimensions[0]);
         $x = 212 - $textWidth;
-        imagefttext($im, 12, $angle, $x, 177, $black, $font, $this->amount);
+        imagefttext($im, 12, $angle, 350, 80, $black, $font, $this->amount);
 
         imagefttext($im, 12, $angle, 238, 177, $black, $font, $this->payment_date);
         imagefttext($im, 12, $angle, 368, 177, $black, $font, $this->receiver_bic);
-        imagefttext($im, 12, $angle, 17, 210, $black, $font, $this->receiver_iban);
+        $this->imagettftextSp($im, 12, $angle, 335, 75, $black, $font, $this->receiver_iban, 9);
         imagefttext($im, 12, $angle, 17, 244, $black, $font, $this->reference_prefix);
         imagefttext($im, 12, $angle, 85, 244, $black, $font, $this->reference);
         imagefttext($im, 9, $angle, 17, 276, $black, $font, $this->receiver_address);
@@ -58,6 +58,23 @@ class UpnGenerator {
         header('Content-Type: image/jpeg');
         imagejpeg($im);
         imagedestroy($im);
-	}
+    }
+    
+    public function imagettftextSp($image, $size, $angle, $x, $y, $color, $font, $text, $spacing = 0)
+    {
+        if ($spacing == 0)
+        {
+            imagettftext($image, $size, $angle, $x, $y, $color, $font, $text);
+        }
+        else
+        {
+            $temp_x = $x;
+            for ($i = 0; $i < strlen($text); $i++)
+            {
+                $bbox = imagettftext($image, $size, $angle, $temp_x, $y, $color, $font, $text[$i]);
+                $temp_x += $spacing + ($bbox[2] - $bbox[0]);
+            }
+        }
+    }
 
 }

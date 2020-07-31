@@ -1,13 +1,17 @@
 {
-  "name": "media24si/upn-generator",
-  "description": "UPN form generator",
+  "name": "slavi122/upn-generator",
+  "description": "UPN form generator for BiH",
   "license": "MIT",
-  "keywords": ["upn"],
-  "homepage": "https://github.com/Media24si/UpnGenerator",
+  "keywords": ["upn", "bih"],
+  "homepage": "https://github.com/slavi122/UpnGenerator",
   "authors": [
     {
       "name": "Bostjan Oblak",
       "email": "bostjan@muha.cc"
+    },
+    {
+      "name": "Slaviša Dragičević",
+      "email": "slavi122@gmail.com"
     }
   ],
   "require": {
@@ -15,7 +19,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Media24si\\UpnGenerator\\": "src/"
+      "Slavi122\\UpnGenerator\\": "src/"
     }
   }
 }
